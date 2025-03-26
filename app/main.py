@@ -1,12 +1,12 @@
 from fastapi import FastAPI
-from app.database import engine
-from app.models.RestaurantModel import Base
-from app.routers import RestaurantRouters
+from app.routers import RestaurantRouters, auth
+from app.database import Base, engine
 
 app = FastAPI()
 
-# Création automatique des tables dans la BDD
+# Création des tables
 Base.metadata.create_all(bind=engine)
 
-# Inclusion des routes
+# Routes
+app.include_router(auth.router)
 app.include_router(RestaurantRouters.router)
