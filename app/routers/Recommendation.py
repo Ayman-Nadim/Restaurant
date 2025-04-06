@@ -220,7 +220,7 @@ async def get_recommendations(request: PromptRequest):
             logger.info("Aucun lieu trouvé pour cette recherche")
             return RecommendationResponse(results=[], location=location, activity=activity)
 
-        processed_results = process_places_results(places[:10])
+        processed_results = process_places_results(places[:100])
 
         return RecommendationResponse(results=processed_results, location=location, activity=activity)
 

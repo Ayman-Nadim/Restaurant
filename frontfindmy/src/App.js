@@ -3,7 +3,7 @@ import axios from "axios";
 import { FiSearch, FiMapPin, FiStar, FiExternalLink, FiPhone, FiGlobe } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 
-function App() {
+function App(){
   const [prompt, setPrompt] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -175,117 +175,135 @@ function App() {
         </AnimatePresence>
       </div>
 
-     {/* Place details modal */}
-{/* Place details modal */}
-<AnimatePresence>
-  {selectedPlace && (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4"
-      onClick={() => setSelectedPlace(null)}
-    >
-      <motion.div
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        exit={{ y: 20, opacity: 0 }}
-        className="bg-white rounded-2xl shadow-lg p-6 w-[65%] max-h-[75vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div>
-          <h2 className="text-2xl font-semibold mb-4">{selectedPlace.name}</h2>
-          <div className="flex items-center text-gray-600 mb-2">
-            <FiMapPin className="mr-2" />
-            <span>{selectedPlace.address}</span>
-          </div>
 
-          {selectedPlace.rating && (
-            <div className="flex items-center text-gray-600 mb-2">
-              <FiStar className="mr-2 text-yellow-500" />
-              <span>{selectedPlace.rating}</span>
-            </div>
-          )}
-
-          {selectedPlace.types && (
-            <div className="text-gray-600 mb-2">
-              <strong>Types:</strong> {selectedPlace.types.join(", ")}
-            </div>
-          )}
-
-          {selectedPlace.phone && (
-            <div className="flex items-center text-gray-600 mb-2">
-              <FiPhone className="mr-2" />
-              <span>{selectedPlace.phone}</span>
-            </div>
-          )}
-
-          {selectedPlace.website && (
-            <div className="flex items-center text-blue-600 mb-2">
-              <FiGlobe className="mr-2" />
-              <a href={selectedPlace.website} target="_blank" rel="noopener noreferrer" className="hover:underline">
-                Website
-              </a>
-            </div>
-          )}
-
-          {selectedPlace.reviews && selectedPlace.reviews.length > 0 && (
-            <div className="text-gray-600 mt-4">
-              <strong>Reviews:</strong>
-              <div className="mt-2 space-y-4">
-                {selectedPlace.reviews.map((review, reviewIndex) => (
-                  <div key={reviewIndex} className="p-4 rounded-lg bg-gray-100">
-                    <div className="flex items-center mb-2">
-                      <strong className="mr-2">{review.author_name}</strong>
-                      <div className="flex items-center">
-                        {[...Array(review.rating)].map((_, i) => (
-                          <FiStar key={i} className="text-yellow-500" />
-                        ))}
-                      </div>
-                    </div>
-                    <p>{review.text}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {selectedPlace.photos && selectedPlace.photos.length > 0 && (
-            <div className="mt-4">
-              <div className="flex overflow-x-auto snap-x">
-                {selectedPlace.photos.map((photoUrl, photoIndex) => (
-                  <img
-                    key={photoIndex}
-                    src={photoUrl}
-                    alt={`${selectedPlace.name} - Photo ${photoIndex + 1}`}
-                    className="w-full h-48 object-cover snap-center flex-shrink-0 mr-2"
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = "https://via.placeholder.com/400x300?text=Image+Not+Available";
-                    }}
-                  />
-                ))}
-              </div>
-            </div>
-          )}
-
-          <button
-            onClick={() => openGoogleMaps(selectedPlace.location.lat, selectedPlace.location.lng)}
-            className="flex items-center text-blue-600 hover:text-blue-800 mt-4"
+      {/* Place details modal */}
+      <AnimatePresence>
+        {selectedPlace && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4"
+            onClick={() => setSelectedPlace(null)}
           >
-            <FiExternalLink className="mr-2" />
-            <span>View on Google Maps</span>
-          </button>
-        </div>
-      </motion.div>
-    </motion.div>
-  )}
-</AnimatePresence>
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 20, opacity: 0 }}
+              className="bg-white rounded-2xl shadow-lg p-6 w-[65%] max-h-[75vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div>
+                <h2 className="text-2xl font-semibold mb-4">{selectedPlace.name}</h2>
+                <div className="flex items-center text-gray-600 mb-2">
+                  <FiMapPin className="mr-2" />
+                  <span>{selectedPlace.address}</span>
+                </div>
 
+                {selectedPlace.rating && (
+                  <div className="flex items-center text-gray-600 mb-2">
+                    <FiStar className="mr-2 text-yellow-500" />
+                    <span>{selectedPlace.rating}</span>
+                  </div>
+                )}
 
+                {selectedPlace.types && (
+                  <div className="text-gray-600 mb-2">
+                    <strong>Types:</strong> {selectedPlace.types.join(", ")}
+                  </div>
+                )}
+
+                {selectedPlace.phone && (
+                  <div className="flex items-center text-gray-600 mb-2">
+                    <FiPhone className="mr-2" />
+                    <span>{selectedPlace.phone}</span>
+                  </div>
+                )}
+
+                {selectedPlace.website && (
+                  <div className="flex items-center text-blue-600 mb-2">
+                    <FiGlobe className="mr-2" />
+                    <a href={selectedPlace.website} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                      Website
+                    </a>
+                  </div>
+                )}
+
+                {selectedPlace.reviews && selectedPlace.reviews.length > 0 && (
+                  <div className="text-gray-600 mt-4">
+                    <strong>Reviews:</strong>
+                    <div className="mt-2 space-y-4">
+                      {selectedPlace.reviews.map((review, reviewIndex) => (
+                        <div key={reviewIndex} className="p-4 rounded-lg bg-gray-100">
+                          <div className="flex items-center mb-2">
+                            <strong className="mr-2">{review.author_name}</strong>
+                            <div className="flex items-center">
+                              {[...Array(review.rating)].map((_, i) => (
+                                <FiStar key={i} className="text-yellow-500" />
+                              ))}
+                            </div>
+                          </div>
+                          <p>{review.text}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {selectedPlace.photos && selectedPlace.photos.length > 0 && (
+                  <div className="mt-4">
+                    <div className="flex overflow-x-auto snap-x">
+                      {selectedPlace.photos.map((photoUrl, photoIndex) => (
+                        <img
+                          key={photoIndex}
+                          src={photoUrl || "https://www.century21casa.immo/wp-content/uploads/2021/12/empty.jpg"}
+                          alt={`${selectedPlace.name} - Photo ${photoIndex + 1}`}
+                          className="w-full h-48 object-cover snap-center flex-shrink-0 mr-2"
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = "https://via.placeholder.com/400x300?text=Image+Not+Available";
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <button
+                  onClick={() => openGoogleMaps(selectedPlace.location.lat, selectedPlace.location.lng)}
+                  className="flex items-center text-blue-600 hover:text-blue-800 mt-4"
+                >
+                  <FiExternalLink className="mr-2" />
+                  <span>View on Google Maps</span>
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </div>
   );
 }
 
 export default App;
+// import React from "react";
+// import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+// import Signup from "./signUp";
+// import SignIn from "./SignIn";
+
+// const App = () => {
+//   return (
+//     <Router>
+//       <div>
+//         <h1>Bienvenue sur mon application</h1>
+//         <Routes>
+//           <Route path="/signup" element={<Signup />} />
+//           <Route path="/signIn" element={<SignIn />} />
+//         </Routes>
+//       </div>
+//     </Router>
+//   );
+// };
+
+// export default App;
